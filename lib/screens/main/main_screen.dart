@@ -5,6 +5,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/data_provider.dart';
 import '../../widgets/person_card.dart';
 import '../../widgets/add_person_dialog.dart';
+import '../../services/floating_window_service.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -190,6 +191,14 @@ class _MainScreenState extends State<MainScreen> {
           ),
           const Divider(),
           ListTile(
+            leading: const Icon(Icons.picture_in_picture),
+            title: const Text('Enable Floating Window'),
+            onTap: () async {
+              Navigator.pop(context);
+              await _enableFloatingWindow();
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.settings),
             title: const Text('Settings'),
             onTap: () {
@@ -235,21 +244,13 @@ class _MainScreenState extends State<MainScreen> {
                   authProvider.currentUserName ?? 'User',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                const SizedBox(height: 24),
-                ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: const Text('Settings'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to settings
-                  },
-                ),
+                const SizedBox(height: 16),
                 ListTile(
                   leading: const Icon(Icons.logout),
                   title: const Text('Sign Out'),
                   onTap: () {
                     Navigator.pop(context);
-                    _signOut(context);
+                    Provider.of<AuthProvider>(context, listen: false).signOut();
                   },
                 ),
               ],
@@ -258,6 +259,38 @@ class _MainScreenState extends State<MainScreen> {
         },
       ),
     );
+  }
+
+  Future<void> _enableFloatingWindow() async {
+    try {
+      final hasPermission = await FloatingWindowService.requestOverlayPermission();
+      
+      if (!mounted) return;
+      
+      if (hasPermission) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Floating window enabled! It will appear when you minimize the app.'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Overlay permission is required for floating window feature.'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error enabling floating window: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   void _showAddPersonDialog(BuildContext context) {

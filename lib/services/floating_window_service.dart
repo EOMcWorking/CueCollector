@@ -33,12 +33,12 @@ class FloatingWindowService {
     await FlutterOverlayWindow.showOverlay(
       enableDrag: true,
       overlayTitle: "Cue Collector",
-      overlayContent: 'Quick Access',
+      overlayContent: 'Quick Access - Tap to open',
       flag: OverlayFlag.defaultFlag,
       visibility: NotificationVisibility.visibilityPublic,
-      positionGravity: PositionGravity.auto,
-      width: 100,
-      height: 100,
+      positionGravity: PositionGravity.right,
+      width: 150,
+      height: 150,
     );
   }
 
