@@ -1,0 +1,56 @@
+name: cue_collector
+description: A comprehensive app for cue collection, asset management, activity tracking, and health management.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # UI Components
+  cupertino_icons: ^1.0.2
+  material_design_icons_flutter: ^7.0.7296
+  
+  # State Management
+  provider: ^6.1.1
+  
+  # Local Database
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  
+  # Audio Recording
+  record: ^6.1.1
+  audioplayers: ^6.5.0
+  permission_handler: ^12.0.1
+  
+  # Charts for Review Section
+  fl_chart: ^0.64.0
+  
+  # Navigation
+  go_router: ^12.1.1
+  
+  # Floating Window/Overlay
+  flutter_overlay_window: ^0.5.0
+  
+  # File Storage
+  path_provider: ^2.1.1
+  
+  # Authentication (local for now)
+  shared_preferences: ^2.2.2
+  
+  # Progress Indicators
+  percent_indicator: ^4.2.3
+  
+  # Date/Time utilities
+  intl: ^0.18.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
